@@ -44,7 +44,7 @@
                             <div class="col-xl-10 col-lg-10 d-none d-lg-block">
                                 <div class="menu-main d-flex align-items-center justify-content-end">
                                     <!-- Main-menu -->
-                                    <div class="main-menu f-right d-lg-block">
+                                    <div class="main-menu f-right d-none d-lg-block">
                                         <nav> 
                                             <ul id="navigation">
                                                 <li><a href="index.html">Home</a></li>
@@ -59,9 +59,6 @@
                                                 </li>
                                                 <li><a href="contact.html">Contact</a></li>
                                             </ul>
-                                            <button type="button" class="menu-close d-lg-none" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
                                         </nav>
                                     </div>
                                     <div class="header-right-btn f-right d-none d-lg-block ml-20">
@@ -73,8 +70,8 @@
                                             <div class="modal-wrapper" id="modal-wrapper">
                                                 <div class="modal-overlay" id="modal-overlay"></div>
                                                 <div class="modal-window" id="modal-window">
-                                                    <form action="#" class="form-book">
-                                                        <input type="text" class="form-book__input" placeholder="Full Name">
+                                                    <form action="mail.php" class="form-modal">
+                                                        <input type="text" class="form-book__input" name="fullName" placeholder="Full Name">
                                                         <input type="text" class="form-book__input" placeholder="Email">
                                                         <input type="text" class="form-book__input" placeholder="Phone">
                                                         <button class="btn select-btn modal-close-btn">Order Now</button>
@@ -91,6 +88,24 @@
                                 <div class="mobile_menu d-flex d-lg-none justify-content-end">
                                     <button type="button" href="#" aria-haspopup="true" role="button" tabindex="0" class="slicknav_btn slicknav_collapsed ml-auto"><span class="slicknav_menutxt">MENU</span></button>
                                 </div>
+                                <nav class="mobile__nav"> 
+                                    <ul class="mobile__links">
+                                        <li><a href="index.html" class="mobile__item">Home</a></li>
+                                        <li><a href="about.html" class="mobile__item">About</a></li>
+                                        <li><a href="menu.html" class="mobile__item">Menu</a></li>
+                                        <li><a href="blog.html" class="mobile__item">Blog</a>
+                                            <!-- <ul class="submenu">
+                                                <li><a href="blog.html">Blog</a></li>
+                                                <li><a href="blog_details.html">Blog Details</a></li>
+                                                <li><a href="elements.html">Element</a></li>
+                                            </ul> -->
+                                        </li>
+                                        <li><a href="contact.html" class="mobile__item">Contact</a></li>
+                                    </ul>
+                                    <button type="button" class="menu-close d-lg-none" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </nav>
                             </div>
 
                         </div>
@@ -107,7 +122,7 @@
                 <div class="single-slider slider-height d-flex align-items-center">
                     <div class="container">
                         <div class="row">
-                            <div class="col-xl-9 col-lg-9 col-md-9">
+                            <div class="col-md-9">
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
                                         <div class="hero__caption swiper-slide">
@@ -522,11 +537,11 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <form action="#" class="form-book">
-                            <input type="text" class="form-book__input" placeholder="Full Name">
-                            <input type="text" class="form-book__input" placeholder="Email">
-                            <input type="text" class="form-book__input" placeholder="Phone">
-                            <button class="btn select-btn">Book Now</button>
+                        <form action="mail.php" class="form-book form-valid">
+                            <input type="text" class="form-book__input" name="fullName" placeholder="Full Name">
+                            <input type="text" class="form-book__input" name="email" placeholder="Email">
+                            <input type="text" class="form-book__input" name="phone" placeholder="Phone">
+                            <button class="btn select-btn book-btn">Book Now</button>
                         </form>
                     </div>
                 </div>
@@ -600,7 +615,7 @@
                                 <input type="text" placeholder="Your Email">
                             </div>
                             <div class="search-form">
-                                <button>Subscribe</button>
+                                <button type="button">Subscribe</button>
                             </div>	
                         </form>	
                     </div>
@@ -733,10 +748,12 @@
                             <!-- Footer Social -->
                             <div class="footer-social f-right">
                                 <span>Follow Us</span>
+                                <!--noindex-->
                                 <a href="#"><i class="fab fa-twitter"></i></a>
                                 <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
                                 <a href="#"><i class="fas fa-globe"></i></a>
                                 <a href="#"><i class="fab fa-instagram"></i></a>
+                                <!--noindex-->
                             </div>
                         </div>
                     </div>

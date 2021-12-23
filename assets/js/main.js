@@ -37,9 +37,9 @@ $('.header-btn').on('click',function () {
   $('.modal-wrapper').fadeIn();
 })
 
-$('.modal-close-btn').on('click',function () {
-  $('.modal-wrapper').fadeOut();
-});
+// $('.modal-close-btn').on('click',function () {
+//   $('.modal-wrapper').fadeOut();
+// });
 
 $('.modal-overlay').on('click',function () {
   $('.modal-wrapper').fadeOut();
@@ -48,29 +48,20 @@ $('.modal-overlay').on('click',function () {
 
 // MOBILE MENU
 $('.mobile_menu').on('click', function () {
-  $('.main-menu').toggle();
-  // console.log(this);
+  $('.mobile__nav').toggle();
+  console.log('ok');
 })
 
 $('.menu-close').on('click', function () {
-  $('.main-menu').hide();
-  console.log(this);
+  $('.mobile__nav').hide();
+  // console.log(this);
 })
-
-
-// $('.slicknav_btn').on('click',function () {
-//   $('.modal-wrapper').fadeIn();
-// })
-
-// $('.menu-close').on('click',function () {
-//   $('.modal-wrapper').fadeOut();
-// });
 
 
 // SLIDER
 const swiper = new Swiper('.swiper-container', {
   spaceBetween : 50,
-  // loop: true,
+  loop: true,
   autoplay : {
   delay: 4000
   }
@@ -86,42 +77,104 @@ const parallaxInstance = new Parallax(scene);
 
 
 // VALIDATE
+$(".book-btn").on('click',function(e) {
+  e.preventDefault();
+  $(this).parent('form').submit();
+});
+
 $.validator.addMethod('regex',function (value, element, regexp) {
   let regExp = new RegExp(regexp);
   return regExp.test(value);
 }, 'Please check your information');
 
-$(".form-book").validate({
-  rules : {
-    fullName : {
-      required : true,
-      regex : "[A-Za-z]{1,32}"
+function validForm(el) {
+  el.validate({
+    rules : {
+      fullName : {
+        required : true,
+        regex : "[A-Za-z]{1,32}"
+      },
+      email : {
+        required : true,
+        regex: "[0-9A-Za-z]+"
+      },
+      phone : {
+        required : true,
+        digits : true,
+        minlength: 10,
+        maxlength: 13,
+        regex: "[0-9]+"
+      }
     },
-    email : {
-      required : true,
-      regex: "[0-9A-Za-z]+"
+    messages : {
+      fullName : {
+        required : 'Fild is required',
+        regexp : 'Enter yor name correctly'
+      },
+      email : {
+        required : 'Fild is required',
+        regexp : 'Enter yor email correctly'
+      },
+      phone : {
+        required : 'Fild is required',
+        regexp : 'Enter yor phone number correctly'
+      }
     },
-    phone : {
-      required : true,
-      digits : true,
-      minlength: 10,
-      maxlength: 13,
-      regex: "[0-9]+"
+    sabmitHandler : function (form) {
+      $('#preloader-active').fadeIn();
+      let $form = $(form);
+      let $formId = $(form).attr('id');
+      switch($formId) {
+        case "form-book" :
+          $.ajax({
+            type : 'POST',
+            url : $form.attr('action'),
+            data : $form.serialize()
+          })
+          .done(function() {
+            console.log('Success');
+          })
+          .fail(function() {
+            console.log('Fail');
+          })
+          .always(function() {
+            setTimeout(function() {
+              $form.trigger('reset');
+              $('wrapper-modal').fadeOut();
+            }, 1000);
+            setTimeout(function() {
+              $('#preloader-active').fadeOut();
+            }, 1400)
+          });
+        break;
+        case 'search-box':
+          $.ajax({
+            type : 'POST',
+            url : $form.attr('action'),
+            data : $form.serialize()
+          })
+          .done(function() {
+            console.log('Success');
+          })
+          .fail(function() {
+            console.log('Fail');
+          })
+          .always(function() {
+            setTimeout(function() {
+              $form.trigger('reset');
+            }, 1000);
+            setTimeout(function() {
+              $('#preloader-active').fadeOut();
+            }, 1400)
+          });
+        break;
+      }
+      return false;
     }
-  },
-  messages : {
-    fullName : {
-      required : 'Fild is required',
-      regexp : 'Enter yor name correctly'
-    },
-    email : {
-      required : 'Fild is required',
-      regexp : 'Enter yor email correctly'
-    },
-    phone : {
-      required : 'Fild is required',
-      regexp : 'Enter yor phone number correctly'
-    }
-  }
- });
- 
+  })
+};
+
+$('form-valid').each(false() {
+  validForm($(this));
+})
+
