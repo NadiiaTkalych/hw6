@@ -1,5 +1,5 @@
-(function ($)
-  { "use strict"
+(function ($) { 
+  "use strict"
   
 /* 1. Preloder (готовый код, можно использовать в любом проекте) */
     $(window).on('load', function () {
@@ -61,7 +61,8 @@ $('.menu-close').on('click', function () {
 // SLIDER
 const swiper = new Swiper('.swiper-container', {
   spaceBetween : 50,
-  loop: true,
+  // loop: true,
+  slidesPerView: 1,
   autoplay : {
   delay: 4000
   }
@@ -74,21 +75,107 @@ const parallaxInstance = new Parallax(scene);
 
 
 // TABS
+$('.nav-link').on('click', function () {
+  console.log(this);
+  let currTab = $(this).index();
 
+  $('.nav-link').removeClass('active');
+  $(this).addClass('active')
 
-// VALIDATE
-$(".book-btn").on('click',function(e) {
-  e.preventDefault();
-  $(this).parent('form').submit();
+  $('.tab-pane').removeClass('show active');
+  $('.tab-pane').eq(currTab).addClass('show active');
 });
 
-$.validator.addMethod('regex',function (value, element, regexp) {
-  let regExp = new RegExp(regexp);
-  return regExp.test(value);
-}, 'Please check your information');
+$("#nav-tab").click(function() {
+  $('html, body').animate({
+      scrollTop: $("#nav-tabContent").offset().top
+  }, 1000);
+});
 
-function validForm(el) {
-  el.validate({
+// VALIDATE
+$(".book-btn").on('click', function(event) {
+  event.preventDefault(); // prevents data send to server by browser (we use jQuery instead)
+
+  $(this).parent('form').submit(); // send data: jquery -> check data -> send data if it's ok
+});
+
+$.validator.addMethod(
+  'regex', 
+  function (value, element, regexp) {
+    const regExp = new RegExp(regexp);
+    return regExp.test(value);
+  }, 
+  'Please check your information'
+);
+
+function validateForm(el) {
+  console.log('add validateForm')
+
+  const sendDataToServer = function (formArg) {
+    console.log('sendDataToServer')
+    $('#preloader-active').fadeIn();
+
+    const form = $(formArg);
+    const formId = $(formArg).attr('id');
+
+    switch(formId) {
+      // case "form-book" : // modal form
+      //   // send data
+      //   $.ajax({
+      //     type : 'POST',
+      //     url : form.attr('action'),
+      //     data : form.serialize()
+      //   })
+      //   // wait for result of sending
+      //   .done(function() {
+      //     console.log('Success');
+      //   })
+      //   // result is negative
+      //   .fail(function() {
+      //     console.log('Fail');
+      //   })
+      //   // result is positive
+      //   .always(function() {
+      //     setTimeout(function() {
+      //       form.trigger('reset'); // clear form
+      //       $('wrapper-modal').fadeOut(); // hide form
+      //     }, 1000);
+      //     setTimeout(function() {
+      //       $('#preloader-active').fadeOut(); // hide preloader
+      //     }, 1400)
+      //   });
+      //   break;
+
+      case 'form-page':
+        console.log('from switch case')
+        return false;
+        
+        $.ajax({
+          type : 'POST',
+          url : form.attr('action'),
+          data : form.serialize()
+        })
+        .done(function() {
+          console.log('Success');
+        })
+        .fail(function() {
+          console.log('Fail');
+        })
+        .always(function() {
+          setTimeout(function() {
+            form.trigger('reset');
+          }, 1000);
+          setTimeout(function() {
+            $('#preloader-active').fadeOut();
+          }, 1400)
+        });
+        break;
+    }
+
+    return false;
+  }
+  
+  const validateSettings = {
     rules : {
       fullName : {
         required : true,
@@ -120,61 +207,13 @@ function validForm(el) {
         regexp : 'Enter yor phone number correctly'
       }
     },
-    sabmitHandler : function (form) {
-      $('#preloader-active').fadeIn();
-      let $form = $(form);
-      let $formId = $(form).attr('id');
-      switch($formId) {
-        case "form-book" :
-          $.ajax({
-            type : 'POST',
-            url : $form.attr('action'),
-            data : $form.serialize()
-          })
-          .done(function() {
-            console.log('Success');
-          })
-          .fail(function() {
-            console.log('Fail');
-          })
-          .always(function() {
-            setTimeout(function() {
-              $form.trigger('reset');
-              $('wrapper-modal').fadeOut();
-            }, 1000);
-            setTimeout(function() {
-              $('#preloader-active').fadeOut();
-            }, 1400)
-          });
-        break;
-        case 'search-box':
-          $.ajax({
-            type : 'POST',
-            url : $form.attr('action'),
-            data : $form.serialize()
-          })
-          .done(function() {
-            console.log('Success');
-          })
-          .fail(function() {
-            console.log('Fail');
-          })
-          .always(function() {
-            setTimeout(function() {
-              $form.trigger('reset');
-            }, 1000);
-            setTimeout(function() {
-              $('#preloader-active').fadeOut();
-            }, 1400)
-          });
-        break;
-      }
-      return false;
-    }
-  })
+    sabmitHandler : sendDataToServer,
+  };
+
+  el.validate(validateSettings);
 };
 
-$('form-valid').each(false() {
-  validForm($(this));
-})
-
+$('.form-valid') // find all froms with this class
+  .each(function() {
+    validateForm($(this));
+  });
