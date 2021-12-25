@@ -119,32 +119,32 @@ function validateForm(el) {
     console.log('==> data for sending', formData);
 
     switch(formId) {
-      // case "form-modal" :
-      //   // send data
-      //   $.ajax({
-      //     type : 'POST',
-      //     url : form.attr('action'),
-      //     data : form.serialize()
-      //   })
-      //   // wait for result of sending
-      //   .done(function() {
-      //     console.log('Success');
-      //   })
-      //   // result is negative
-      //   .fail(function() {
-      //     console.log('Fail');
-      //   })
-      //   // result is positive
-      //   .always(function() {
-      //     setTimeout(function() {
-      //       form.trigger('reset'); // clear form
-      //       $('wrapper-modal').fadeOut(); // hide form
-      //     }, 1000);
-      //     setTimeout(function() {
-      //       $('#preloader-active').fadeOut(); // hide preloader
-      //     }, 1400)
-      //   });
-      //   break;
+      case "form-modal" :
+        // send data
+        $.ajax({
+          type : 'POST',
+          url : form.attr('action'),
+          data : form.serialize()
+        })
+        // wait for result of sending
+        .done(function() {
+          console.log('Success');
+        })
+        // result is negative
+        .fail(function() {
+          console.log('Fail');
+        })
+        // result is positive
+        .always(function() {
+          setTimeout(function() {
+            form.trigger('reset'); // clear form
+            $('wrapper-modal').fadeOut(); // hide form
+          }, 1000);
+          setTimeout(function() {
+            $('#preloader-active').fadeOut(); // hide preloader
+          }, 1400)
+        });
+        break;
 
       case 'form-page':
         $.ajax({
