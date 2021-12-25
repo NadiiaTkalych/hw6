@@ -109,17 +109,17 @@ $.validator.addMethod(
 );
 
 function validateForm(el) {
-  console.log('add validateForm')
-
-  const sendDataToServer = function (formArg) {
-    console.log('sendDataToServer')
+  const sendDataToServer = function (formArg, event) {
     $('#preloader-active').fadeIn();
 
     const form = $(formArg);
     const formId = $(formArg).attr('id');
+    const formData = form.serialize();
+
+    console.log('==> data for sending', formData);
 
     switch(formId) {
-      // case "form-book" : // modal form
+      // case "form-modal" :
       //   // send data
       //   $.ajax({
       //     type : 'POST',
@@ -147,19 +147,16 @@ function validateForm(el) {
       //   break;
 
       case 'form-page':
-        console.log('from switch case')
-        return false;
-        
         $.ajax({
           type : 'POST',
           url : form.attr('action'),
           data : form.serialize()
         })
         .done(function() {
-          console.log('Success');
+          console.log('sending success');
         })
         .fail(function() {
-          console.log('Fail');
+          console.log('sending fail');
         })
         .always(function() {
           setTimeout(function() {
@@ -207,13 +204,13 @@ function validateForm(el) {
         regexp : 'Enter yor phone number correctly'
       }
     },
-    sabmitHandler : sendDataToServer,
+    submitHandler : sendDataToServer,
   };
 
   el.validate(validateSettings);
 };
 
-$('.form-valid') // find all froms with this class
+$('.form-with-validation') // find all froms with this class
   .each(function() {
     validateForm($(this));
   });
