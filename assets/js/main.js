@@ -35,11 +35,7 @@
 // MODAL
 $('.header-btn').on('click',function () {
   $('.modal-wrapper').fadeIn();
-})
-
-// $('.modal-close-btn').on('click',function () {
-//   $('.modal-wrapper').fadeOut();
-// });
+});
 
 $('.modal-overlay').on('click',function () {
   $('.modal-wrapper').fadeOut();
@@ -49,19 +45,17 @@ $('.modal-overlay').on('click',function () {
 // MOBILE MENU
 $('.mobile_menu').on('click', function () {
   $('.mobile__nav').toggle();
-  console.log('ok');
-})
+});
 
 $('.menu-close').on('click', function () {
   $('.mobile__nav').hide();
-  // console.log(this);
-})
+});
 
 
 // SLIDER
 const swiper = new Swiper('.swiper-container', {
   spaceBetween : 50,
-  // loop: true,
+  loop: true,
   slidesPerView: 1,
   autoplay : {
   delay: 4000
@@ -70,8 +64,8 @@ const swiper = new Swiper('.swiper-container', {
 
 
 // PARALLAX
-const scene = $('#scene').get(0);
-const parallaxInstance = new Parallax(scene);
+var scene = document.getElementById('scene');
+var parallaxInstance = new Parallax(scene);
 
 
 // TABS
